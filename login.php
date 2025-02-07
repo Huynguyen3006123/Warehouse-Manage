@@ -1,20 +1,27 @@
 <?php
 session_start();
-require 'db_mock.php';
+require 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $hashed_password = getUser($username);
+    // Chuẩn bị truy vấn SQL
+    $stmt = $conn->prepare("SELECT UserID, Password FROM Users WHERE UserName = ?");
+    $stmt->bind_param("s", $username); // "s" đại diện cho kiểu string
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-    if ($hashed_password && password_verify($password, $hashed_password)) {
-        $_SESSION['user_id'] = $username;
+    if ($user && password_verify($password, $user['Password'])) {
+        $_SESSION['user_id'] = $user['UserID']; // Lưu ID vào session
         header("Location: dashboard.php");
         exit();
     } else {
         $error = "Sai tài khoản hoặc mật khẩu.";
     }
+
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
