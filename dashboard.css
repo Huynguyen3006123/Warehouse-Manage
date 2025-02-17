@@ -1,0 +1,116 @@
+/* Thiết lập font và màu sắc tổng thể */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #e6f7ff, #b3e0ff);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 180px;
+    background: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Các mục menu */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 0%;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 6px;
+    text-align: left;
+    
+}
+.sidebar ul li a {
+    text-decoration: none; /* Bỏ gạch chân */
+    color: black; /* Đặt màu chữ mặc định */
+    display: block; /* Giúp toàn bộ vùng <li> có thể click */
+    padding: 16px; /* Đảm bảo căn chỉnh giống <li> */
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    width: 100%; /* Đảm bảo toàn bộ chiều rộng của <li> */
+}
+
+.sidebar ul li:hover, 
+.sidebar ul li a:hover {
+    background: #007bff;
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Nút Đăng xuất */
+.logout-btn {
+    position: absolute;
+    bottom: 50px;
+    left: 20px;
+    width: 160px;
+    display: block;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    background: red;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background: darkred;
+}
+
+/* Nội dung chính */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Mỗi box riêng lẻ */
+.dashboard-box {
+    background: #57a9ff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 45%; /* Chia làm 2 cột nếu màn hình lớn */
+    min-width: 250px;
+}
+
+/* Responsive: Nếu màn hình nhỏ thì mỗi box chiếm toàn bộ chiều rộng */
+@media (max-width: 600px) {
+    .dashboard-box {
+        width: 100%;
+    }
+}

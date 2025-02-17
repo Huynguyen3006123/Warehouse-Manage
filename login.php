@@ -1,13 +1,13 @@
 <?php
 session_start();
-require 'db.php';
+require 'api/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     // Chuẩn bị truy vấn SQL
-    $stmt = $conn->prepare("SELECT UserID, Password FROM Users WHERE UserName = ?");
+    $stmt = $conn->prepare("SELECT UserID, Password FROM NguoiDung WHERE UserName = ?");
     $stmt->bind_param("s", $username); // "s" đại diện cho kiểu string
     $stmt->execute();
     $result = $stmt->get_result();
@@ -25,14 +25,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html>
-<head><title>Đăng nhập</title></head>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Quản lý kho</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<form method="post">
-    <input type="text" name="username" placeholder="Tên đăng nhập" required>
-    <input type="password" name="password" placeholder="Mật khẩu" required>
-    <button type="submit">Đăng nhập</button>
-</form>
-<?php if (isset($error)) echo "<p>$error</p>"; ?>
+    <div class="container">
+        <h1>Web Quản Lý Kho</h1>
+        <p>Hỗ trợ doanh nghiệp nhỏ và vừa</p>
+        <div class="login-box">
+            <h2>Đăng nhập</h2>
+            <form action="#" method="post">
+                <div class="input-group">
+                    <label for="username">Tên đăng nhập</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <?php if (isset($error)) : ?>
+                    <div class="error-message"><?php echo $error; ?></div>
+                <?php endif; ?>
+                <button type="submit">Đăng nhập</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
