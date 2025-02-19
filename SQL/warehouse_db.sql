@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 19, 2025 lúc 07:30 AM
+-- Thời gian đã tạo: Th2 19, 2025 lúc 12:21 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -33,6 +33,14 @@ CREATE TABLE `danhmuc` (
   `MoTa` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `danhmuc`
+--
+
+INSERT INTO `danhmuc` (`MaDanhMuc`, `TenDanhMuc`, `MoTa`) VALUES
+('1', 'Ao', 'Dai'),
+('2', 'Quan', 'Ngan');
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +59,13 @@ CREATE TABLE `hoadon` (
   `GhiChu` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `hoadon`
+--
+
+INSERT INTO `hoadon` (`MaDon`, `MaKH`, `NgayDat`, `MaSP`, `SoLuong`, `DonGia`, `TrangThai`, `GhiChu`) VALUES
+('HD1', 'KH1', '2025-02-19 00:00:00', '1', 5, 50000.0000, 'Đã giao', 'Giao hàng thành công');
+
 -- --------------------------------------------------------
 
 --
@@ -64,6 +79,13 @@ CREATE TABLE `khachhang` (
   `SoDienThoai` varchar(20) NOT NULL,
   `Email` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `khachhang`
+--
+
+INSERT INTO `khachhang` (`MaKH`, `TenKH`, `DiaChi`, `SoDienThoai`, `Email`) VALUES
+('KH1', 'Nguyen Van A', '123 Le Loi', '0987654321', 'a@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -99,6 +121,13 @@ CREATE TABLE `nhacungcap` (
   `SoDienThoai` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `nhacungcap`
+--
+
+INSERT INTO `nhacungcap` (`MaNCC`, `TenNCC`, `DiaChi`, `SoDienThoai`) VALUES
+('1', 'NCC1', 'DiaChi1', '123456789');
+
 -- --------------------------------------------------------
 
 --
@@ -113,6 +142,14 @@ CREATE TABLE `nhap` (
   `NgayNhap` datetime NOT NULL DEFAULT current_timestamp(),
   `MaNCC` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhap`
+--
+
+INSERT INTO `nhap` (`MaNhap`, `MaSP`, `SoLuong`, `GiaNhap`, `NgayNhap`, `MaNCC`) VALUES
+('1', '1', 10, 100000.0000, '2021-01-01 00:00:00', '1'),
+('2', '2', 20, 50000.0000, '2021-01-02 00:00:00', '1');
 
 -- --------------------------------------------------------
 
@@ -133,6 +170,14 @@ CREATE TABLE `sanpham` (
   `MaNCC` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `sanpham`
+--
+
+INSERT INTO `sanpham` (`MaSP`, `TenSP`, `MaDanhMuc`, `DVT`, `SoLuong`, `GiaNhap`, `GiaBanLe`, `GiaBanSi`, `MoTa`, `MaNCC`) VALUES
+('1', 'Ao ngan', '1', 'Cai', 5, 100000.0000, 150000.0000, 120000.0000, 'Ao dai', '1'),
+('2', 'Quan dai', '2', 'Cai', 20, 50000.0000, 70000.0000, 60000.0000, 'Quan ngan', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -147,6 +192,13 @@ CREATE TABLE `xuat` (
   `NgayXuat` datetime NOT NULL DEFAULT current_timestamp(),
   `MaKH` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `xuat`
+--
+
+INSERT INTO `xuat` (`MaXuat`, `MaSP`, `SoLuong`, `GiaXuat`, `NgayXuat`, `MaKH`) VALUES
+('X1', '1', 5, 50000.0000, '2025-02-19 00:00:00', 'KH1');
 
 --
 -- Chỉ mục cho các bảng đã đổ

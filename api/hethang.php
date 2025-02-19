@@ -1,8 +1,9 @@
-
 <?php
 include 'db.php';
-
-$sql = "SELECT * FROM nhap";
+$sql = "SELECT TenSP, SoLuong, DVT, MaNCC 
+FROM sanpham 
+ORDER BY SoLuong ASC 
+LIMIT 10";
 $result = $conn->query($sql);
 
 $data = [];
