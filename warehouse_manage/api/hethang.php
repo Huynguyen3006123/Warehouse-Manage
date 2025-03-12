@@ -1,9 +1,9 @@
 <?php
 include 'db.php';
-$sql = "SELECT TenSP, SoLuong, DVT, MaNCC 
+$sql = "SELECT MaSP, TenSP, SoLuongTon
 FROM sanpham 
-ORDER BY SoLuong ASC 
-LIMIT 10";
+ORDER BY SoLuongTon ASC 
+LIMIT 3";
 $result = $conn->query($sql);
 
 $data = [];

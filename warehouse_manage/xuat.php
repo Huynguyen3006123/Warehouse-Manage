@@ -27,12 +27,11 @@
     <table class="xuat-table">
       <thead>
         <tr>
-          <th>MaXuat</th>
-          <th>MaSP</th>
-          <th>SoLuong</th>
-          <th>GiaXuat</th>
+          <th>MaPX</th>
+          <th>MaNV</th>
           <th>NgayXuat</th>
-          <th>MaKH</th>
+          <th>TrangThai</th>
+          <th>ChiTiet</th>
         </tr>
       </thead>
       <tbody id="xuatTableBody"></tbody>
@@ -47,18 +46,96 @@
         data.forEach(xuat => {
           rows += `
             <tr>
-              <td>${xuat.MaXuat}</td>
-              <td>${xuat.MaSP}</td>
-              <td>${xuat.SoLuong}</td>
-              <td>${xuat.GiaXuat}</td>
+              <td>${xuat.MaPX}</td>
+              <td>${xuat.MaNV}</td>
               <td>${xuat.NgayXuat}</td>
-              <td>${xuat.MaKH}</td>
+              <td>${xuat.TrangThai}</td>
+              <td>
+                  <button class="detailBtn" data-id="${xuat.MaPX}">Chi Tiết</button>
+              </td>
             </tr>
           `;
         });
         $("#xuatTableBody").html(rows);
       });
+      // Sự kiện khi nhấn nút "Chi Tiết"
+    $(document).on("click", ".detailBtn", function () {
+        let maPX = $(this).data("id");
+        
+        $.ajax({
+            url: "api/get_chitietxuat.php",
+            type: "GET",
+            data: { MaPX: maPX },
+            dataType: "json",
+            success: function (data) {
+                let modalContent = "";
+                data.forEach(item => {
+                    modalContent += `<tr>
+                        <td>${item.MaPX}</td>
+                        <td>${item.MaSP}</td>
+                        <td>${item.TenSP}</td>
+                        <td>${item.SoLuongXuat}</td>
+                        <td>${item.GiaXuat}</td>
+                    </tr>`;
+                });
+
+                $("#detailTableBody").html(modalContent);
+                $("#detailModal").fadeIn();
+            },
+            error: function () {
+                alert("Không thể lấy dữ liệu!");
+            }
+        });
     });
-  </script>
+
+    // Đóng popup
+    $("#closeModal").click(function () {
+    $("#detailModal").fadeOut();
+    $("#overlay").fadeOut(); // Ẩn lớp nền
+});
+
+});
+
+    </script>
+<!-- Modal hiển thị chi tiết phiếu nhập -->
+<div id="detailModal" style="
+    display: none; 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    z-index: 1000;">
+    
+    <h2>Chi Tiết Phiếu Xuất</h2>
+    <table border="1" style="width: 100%; border-collapse: collapse; text-align: center;">
+        <thead>
+            <tr>
+                <th>Mã PX</th>
+                <th>Mã SP</th>
+                <th>Tên SP</th>
+                <th>Số Lượng Xuất</th>
+                <th>Giá Xuất</th>
+            </tr>
+        </thead>
+        <tbody id="detailTableBody"></tbody>
+    </table>
+    <br>
+    <button id="closeModal" style="background: red; color: white; padding: 10px; border: none; cursor: pointer;">Đóng</button>
+</div>
+
+<!-- Lớp nền tối để khi mở modal nhìn đẹp hơn -->
+<div id="overlay" style="
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;"></div>
 </body>
 </html>

@@ -51,10 +51,9 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Mã Sản Phẩm</th>
                         <th>Tên Sản Phẩm</th>
-                        <th>Số Lượng</th>
-                        <th>Đơn Vị Tính</th>
-                        <th>Mã NCC</th>
+                        <th>Số Lượng Tồn</th>
                     </tr>
                 </thead>
                 <tbody id="sanphamTableBody">
@@ -72,10 +71,9 @@
                 data.forEach(sanpham => {
                     rows += `
                         <tr>
+                            <td>${sanpham.MaSP}</td>
                             <td>${sanpham.TenSP}</td>
-                            <td>${sanpham.SoLuong}</td>
-                            <td>${sanpham.DVT}</td>
-                            <td>${sanpham.MaNCC}</td>
+                            <td>${sanpham.SoLuongTon}</td>
                         </tr>
                     `;
                 });

@@ -2,7 +2,7 @@
 $servername = "localhost"; // Hoặc địa chỉ IP của server MySQL
 $username = "root"; // Thay bằng username của bạn
 $password = ""; // Thay bằng mật khẩu của bạn
-$database = "warehouse_db"; // Tên database của bạn
+$database = "warehouse_db1"; // Tên database của bạn
 
 // Kết nối đến MySQL
 $conn = new mysqli($servername, $username, $password, $database);
