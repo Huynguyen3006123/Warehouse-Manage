@@ -1,0 +1,167 @@
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #e6f7ff, #b3e0ff);
+    margin: 0;
+    padding: 0;
+    display: flex; 
+    min-height: 100vh; 
+    box-sizing: border-box;
+}
+
+
+.sidebar {
+    width: 200px;
+    background: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+}
+
+.sidebar ul li:hover a {
+    background: #007bff;
+    color: white;
+    transform: translateX(5px);
+}
+
+
+.logout-btn {
+    margin-top: auto;
+    background: red;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background: darkred;
+}
+
+
+.main-content {
+    margin-left: 240px;
+    display: grid;
+    grid-template-columns: 2fr 1fr; 
+    grid-template-rows: 1fr 1fr;   
+    gap: 20px;
+    padding: 20px;
+    width: calc(100% - 240px);
+    box-sizing: border-box;
+}
+
+
+.overview {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;   
+}
+
+
+.chart {
+    grid-column: 2 / 3; 
+    grid-row: 1 / 2;   
+}
+
+
+.low-stock {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;    
+}
+
+
+.dashboard-box {
+    background: #57a9ff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: flex-start;    
+    padding: 20px;
+}
+
+
+.dashboard-box h3 {
+    text-align: center;
+    margin: 0 0 10px 0;
+    align-self: center;
+}
+
+
+
+.low-stock table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
+    color: #333;
+    font-weight: normal;
+    border-radius: 8px;
+    overflow: hidden; 
+}
+
+
+.low-stock table th, 
+.low-stock table td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.low-stock table th {
+    background: #f1f1f1;
+    font-weight: 600;
+}
+
+.low-stock table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+
+@media (max-width: 768px) {
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        margin-left: 200px;
+    }
+    .overview, .chart, .low-stock {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
