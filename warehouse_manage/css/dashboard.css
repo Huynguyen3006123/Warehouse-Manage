@@ -1,15 +1,15 @@
-/* Thiết lập font và màu sắc tổng thể */
+
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #e6f7ff, #b3e0ff);
     margin: 0;
     padding: 0;
-    display: flex; /* Để sidebar cố định bên trái và nội dung bên phải */
-    min-height: 100vh; /* Đảm bảo trang chiếm ít nhất 100% chiều cao */
+    display: flex; 
+    min-height: 100vh; 
     box-sizing: border-box;
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 200px;
     background: white;
@@ -29,7 +29,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Các mục menu */
+
 .sidebar ul {
     list-style: none;
     padding: 0;
@@ -52,7 +52,7 @@ body {
     transform: translateX(5px);
 }
 
-/* Nút Đăng xuất */
+
 .logout-btn {
     margin-top: auto;
     background: red;
@@ -69,39 +69,37 @@ body {
     background: darkred;
 }
 
-/* Nội dung chính */
-.main-content {
-    /* Tăng margin-left để box tổng quan không chạm sidebar */
+
+.main-content-1 {
     margin-left: 240px;
-    /* Dùng Grid để chia layout */
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Cột 1 rộng gấp đôi cột 2 */
-    grid-template-rows: 1fr 1fr;   /* 2 hàng, chia đều */
+    grid-template-columns: 2fr 1fr; 
+    grid-template-rows: 1fr 1fr;   
     gap: 20px;
     padding: 20px;
     width: calc(100% - 240px);
     box-sizing: border-box;
 }
 
-/* Bảng tổng quan chiếm toàn bộ chiều cao bên trái (2 hàng) */
+
 .overview {
-    grid-column: 1 / 2; /* cột 1 */
-    grid-row: 1 / 3;   /* từ hàng 1 đến hết hàng 2 */
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;   
 }
 
-/* Biểu đồ nhập xuất kho (phía trên bên phải) */
+
 .chart {
-    grid-column: 2 / 3; /* cột 2 */
-    grid-row: 1 / 2;    /* hàng 1 */
+    grid-column: 2 / 3; 
+    grid-row: 1 / 2;   
 }
 
-/* Sản phẩm gần hết hàng (phía dưới bên phải) */
+
 .low-stock {
-    grid-column: 2 / 3; /* cột 2 */
-    grid-row: 2 / 3;    /* hàng 2 */
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;    
 }
 
-/* Thiết kế chung cho các box */
+
 .dashboard-box {
     background: #57a9ff;
     color: white;
@@ -110,15 +108,15 @@ body {
     border-radius: 15px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 
-    /* Bỏ căn giữa dọc, để text ở trên */
+
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Canh text lên phía trên */
-    align-items: flex-start;     /* Canh text sang trái */
+    justify-content: flex-start; 
+    align-items: flex-start;    
     padding: 20px;
 }
 
-/* Riêng tiêu đề h3 bên trong box nếu muốn căn trái */
+
 .dashboard-box h3 {
     text-align: center;
     margin: 0 0 10px 0;
@@ -126,20 +124,19 @@ body {
 }
 
 
-/* Bảng trong phần "Sản phẩm gần hết hàng" */
+
 .low-stock table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    /* Tạo nền trắng cho bảng để dễ đọc */
     background: #fff;
     color: #333;
     font-weight: normal;
     border-radius: 8px;
-    overflow: hidden; /* Để border-radius bao luôn cả bảng */
+    overflow: hidden; 
 }
 
-/* Thêm viền cho các ô */
+
 .low-stock table th, 
 .low-stock table td {
     border: 1px solid #ddd;
@@ -147,18 +144,16 @@ body {
     text-align: left;
 }
 
-/* Nền header bảng */
 .low-stock table th {
     background: #f1f1f1;
     font-weight: 600;
 }
 
-/* Tô màu so le cho các dòng */
 .low-stock table tbody tr:nth-child(even) {
     background: #fafafa;
 }
 
-/* Responsive cho màn hình nhỏ */
+
 @media (max-width: 768px) {
     .main-content {
         display: flex;

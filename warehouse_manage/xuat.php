@@ -88,16 +88,14 @@
         });
     });
 
-    // Đóng popup
     $("#closeModal").click(function () {
     $("#detailModal").fadeOut();
-    $("#overlay").fadeOut(); // Ẩn lớp nền
+    $("#overlay").fadeOut();
 });
 
 });
 
     </script>
-<!-- Modal hiển thị chi tiết phiếu nhập -->
 <div id="detailModal" style="
     display: none; 
     position: fixed; 
@@ -127,7 +125,6 @@
     <button id="closeModal" style="background: red; color: white; padding: 10px; border: none; cursor: pointer;">Đóng</button>
 </div>
 
-<!-- Lớp nền tối để khi mở modal nhìn đẹp hơn -->
 <div id="overlay" style="
     display: none; 
     position: fixed; 

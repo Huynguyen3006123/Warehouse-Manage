@@ -6,16 +6,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Chuẩn bị truy vấn SQL
-    $stmt = $conn->prepare("SELECT UserID, Password FROM NguoiDung WHERE UserName = ?");
-    $stmt->bind_param("s", $username); // "s" đại diện cho kiểu string
+    $stmt = $conn->prepare("SELECT UserID, Password, Role FROM useraccount WHERE UserName = ?");
+    $stmt->bind_param("s", $username); 
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
     if ($user && password_verify($password, $user['Password'])) {
-        $_SESSION['user_id'] = $user['UserID']; // Lưu ID vào session
-        header("Location: dashboard.php");
+        $_SESSION['user_id'] = $user['UserID']; 
+        $_SESSION['role'] = $user['Role']; 
+
+        if ($user['Role'] === 'Quản lý') {
+            header("Location: dashboard.html");
+        } else {
+            header("Location: index.php"); 
+        }
         exit();
     } else {
         $error = "Sai tài khoản hoặc mật khẩu.";
@@ -24,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>

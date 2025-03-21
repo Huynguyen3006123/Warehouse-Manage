@@ -1,29 +1,26 @@
 <?php
-require_once "db.php"; // Kết nối database
+require_once "db.php"; 
 
-// Danh sách user cần thêm
 $users = [
-    "ad" => password_hash("123", PASSWORD_DEFAULT),
-    "u1" => password_hash("123", PASSWORD_DEFAULT)
+    "admin" => password_hash("123456", PASSWORD_DEFAULT),
+    "user1" => password_hash("password1", PASSWORD_DEFAULT),
+    "user2" => password_hash("password2", PASSWORD_DEFAULT)
 ];
 
-// Chuẩn bị câu lệnh SQL
-$sql = "INSERT INTO Users (UserID, UserName, Password, Role) VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO useraccount (UserID, UserName, Password, Role) VALUES (?, ?, ?, ?)";
 
-// Chuẩn bị statement
 $stmt = $conn->prepare($sql);
 
-// Thêm từng user vào database
 foreach ($users as $username => $hashedPassword) {
-    $userID = strtoupper($username); // Chuyển UserID thành chữ hoa
-    $role = ($username == "ad") ? "Admin" : "Employee"; // Phân quyền
+    $userID = strtoupper($username); 
+    $role = ($username == "admin") ? "Quản lý" : "Nhân viên"; 
     $stmt->bind_param("ssss", $userID, $username, $hashedPassword, $role);
     $stmt->execute();
 }
 
 echo "Thêm dữ liệu thành công!";
 
-// Đóng statement và kết nối
+
 $stmt->close();
 $conn->close();
 ?>

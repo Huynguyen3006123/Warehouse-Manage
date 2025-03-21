@@ -1,5 +1,5 @@
 <?php
-include 'db.php'; // Kết nối đến database
+include 'db.php'; 
 
 if (isset($_GET['MaPX'])) {
     $MaPX = $_GET['MaPX'];
