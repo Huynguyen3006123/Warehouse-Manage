@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/product.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
+  <script src="js/jquery-3.7.js"></script>
+  <!-- Thêm một số CSS cho modal để đẹp hơn -->
+  <style>
+    .btn {
+  font-family: 'Poppins', sans-serif;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+    /* Hiện (Success) */
+    .btn-success {
+    background-color: #4CAF50;
+    color: #fff;
+    }
+    .btn-success:hover {
+    background-color: #45A049;
+    }
+
+    /* Ẩn (Danger) */
+    .btn-danger {
+    background-color: #FF4D4D;
+    color: #fff;
+    }
+    .btn-danger:hover {
+    background-color: #E04343;
+    }
+
+    /* Chi Tiết (Info) */
+    .btn-info {
+    background-color: #2196F3;
+    color: #fff;
+    }
+    .btn-info:hover {
+    background-color: #1976D2;
+    }
+
+    /* Nhỏ hơn nếu cần */
+    .btn-small {
+    padding: 4px 8px;
+    font-size: 13px;
+    }
+
+    /* Overlay modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Nội dung modal */
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border: none;
+      width: 40%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    /* Base button */
+.btn {
+  font-family: 'Poppins', sans-serif;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+    .btn-approve {
+        background-color: #28a745;
+        color: #fff;
+    }
+    .btn-approve:hover {
+        background-color: #218838;
+    }
+    .btn-deny {
+        background-color: #dc3545;
+        color: #fff;
+    }
+    .btn-deny:hover {
+        background-color: #c82333;
+    }
+    .btn-detail {
+        background-color: #007bff;
+        color: #fff;
+    }
+    .btn-detail:hover {
+        background-color: #0069d9;
+    }
+
+    .btn-small {
+        padding: 4px 8px;
+        font-size: 13px;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 15px;
+    }
+    .modal-body .table-container {
+        margin: 0;
+        padding: 50;     
+    }
+
+    .modal-content {
+        box-sizing: border-box; 
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+    .modal-content .close {
+      font-size: 22px;
+      font-weight: bold;
+      color: #888;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
+
+    .modal-content .close:hover {
+      color: #000;
+    }
+
+    /* Nội dung form modal */
+    .modal-body form:not(.my-button) {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .modal-content:not(.my-button) {
+        width: 70%;
+    }
+
+    .modal-body form input:not(.my-button),
+    .modal-body form select:not(.my-button),
+    .modal-body form button:not(.my-button) {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-body form button {
+      background-color: #4caf50;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.1s ease-in-out;
+    }
+
+    .modal-body form button:not(.my-button):hover {
+      background-color: #45a049;
+    }
+    button.my-button {
+        background-color: #4CAF50 !important;
+        color: white !important;
+        padding: 12px 24px !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        transition: background-color 0.3s ease, transform 0.2s ease !important;
+        margin-top: 12px !important;
+    }
+
+
+    .my-button:hover {
+        background-color: #45a049;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Trang chính</h2>
+    <ul>
+      <li><a href="#" class="menu-link" data-page="api/dashboard.php">Tổng quan</a></li>
+      <li><a href="#" class="menu-link" data-page="api/get_sanpham.php">Sản phẩm</a></li>
+      <li><a href="#" class="menu-link" data-page="api/get_donhang.php">Đơn Hàng</a></li>
+      <li><a href="#" class="menu-link" data-page="api/get_xuat.php">Xuất kho</a></li>
+      <li><a href="#" class="menu-link" data-page="api/get_hoadon.php">Hoá Đơn</a></li>
+    </ul>
+    <a href="logout.php" class="logout-btn">Đăng xuất</a>
+  </div>
+
+  <!-- Nội dung chính -->
+  <div id="content">
+    <div class="main-contents">
+      <!-- Nội dung động sẽ được tải vào đây -->
+    </div>
+  </div>
+
+  <!-- Modal Thêm Sản Phẩm -->
+  <div id="addProductModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Thêm Sản Phẩm</h3>
+        <span class="close">x</span>
+      </div>
+      <div class="modal-body">
+        <form id="addProductForm">
+          <input type="number" name="MaSP" placeholder="Mã SP" required />
+          <input type="text" name="TenSP" placeholder="Tên SP" required />
+          <input type="text" name="LoaiSP" placeholder="Loại Sản Phẩm" required />
+          <input type="text" name="LoaiSP" placeholder="Kích Cỡ" required />
+          <input type="text" name="MauSac" placeholder="Màu Sắc" required />
+          <input
+            type="number"
+            step="0.01"
+            name="GiaNhap"
+            placeholder="Giá Nhập"
+            required
+          />
+          <input
+            type="number"
+            step="0.01"
+            name="GiaXuat"
+            placeholder="Giá Xuất"
+            required
+          />
+          <button type="submit" class="my-button">Thêm Sản Phẩm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Sửa Sản Phẩm -->
+  <div id="editProductModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cập nhật Sản Phẩm</h3>
+        <span class="close">x</span>
+      </div>
+      <div class="modal-body">
+        <form id="editProductForm">
+          <input type="number" name="MaSP" value="${product.MaSP}" readonly />
+          <input
+            type="text"
+            name="TenSP"
+            value="${product.TenSP}"
+            required
+          />
+          <input
+            type="text"
+            name="LoaiSP"
+            value="${product.LoaiSP}"
+            required
+          />
+          <input
+            type="text"
+            name="KichCo"
+            value="${product.KichCo}"
+            required
+          />
+          <input
+            type="text"
+            name="MauSac"
+            value="${product.MauSac}"
+            required
+          />
+          <input
+            type="number"
+            name="GiaNhap"
+            value="${product.GiaNhap}"
+            required
+          />
+          <input
+            type="number"
+            name="GiaXuat"
+            value="${product.GiaXuat}"
+            required
+          />
+          <input
+            type="number"
+            name="SoLuongTon"
+            value="${product.SoLuongTon}"
+            readonly
+          />
+          <button type="submit">Cập nhật Sản Phẩm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Chi tiết nhập kho -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Chi tiết sản phẩm nhập kho</h3>
+        <span class="close">x</span>
+      </div>
+      <div class="modal-body">
+        <!-- Thêm table-container và product-table để style giống các bảng khác -->
+        <div class="table-container">
+          <table class="product-table" id="detailTable">
+            <thead>
+              <tr>
+                <th>Mã SP</th>
+                <th>Tên SP</th>
+                <th>Loại SP</th>
+                <th>Kích Cỡ</th>
+                <th>Màu sắc</th>
+                <th>Giá nhập</th>
+                <th>Số lượng Nhập</th>
+              </tr>
+            </thead>
+            <tbody id="detailBody">
+              <!-- Dữ liệu chi tiết sẽ được điền bằng JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // Load trang mặc định
+      loadPage("api/dashboard.php");
+
+      // Xử lý click menu
+      $(".menu-link").click(function (e) {
+        e.preventDefault();
+        var page = $(this).data("page");
+        loadPage(page);
+      });
+
+      function loadPage(page) {
+        if (page === "api/get_sanpham.php") {
+          $.ajax({
+            url: page,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              let contentHtml = `
+                <div class="table-container">
+                  <table class="product-table">
+                    <thead>
+                      <tr>
+                        <th>Mã SP</th>
+                        <th>Tên SP</th>
+                        <th>Loại SP</th>
+                        <th>Kích Cỡ</th>
+                        <th>Màu sắc</th>
+                        <th>Giá nhập</th>
+                        <th>Giá xuất</th>
+                        <th>Số lượng tồn</th>
+                        <th>Nhập lần đầu</th>
+                        <th>Hành động</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+              `;
+              data.forEach((product) => {
+                const isHidden = product.TrangThai === "hide";
+                contentHtml += `
+                  <tr data-id="${product.MaSP}" class="${
+                  isHidden ? "strikethrough" : ""
+                }">
+                    <td>${product.MaSP}</td>
+                    <td>${product.TenSP}</td>
+                    <td>${product.LoaiSP}</td>
+                    <td>${product.KichCo}</td>
+                    <td>${product.MauSac}</td>
+                    <td>${product.GiaNhap}</td>
+                    <td>${product.GiaXuat}</td>
+                    <td>${product.SoLuongTon}</td>
+                    <td>${product.NgayNhap}</td>
+                    <td>
+                      <button class="toggle-btn" data-id="${product.MaSP}" data-status="${
+                  product.TrangThai
+                }">
+                      </button>
+                    </td>
+                  </tr>
+                `;
+              });
+              contentHtml += `
+                    </tbody>
+                  </table>
+                  <button id="addProductBtn">Thêm Sản Phẩm</button>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+
+              // Xử lý sự kiện cho nút Ẩn/Hiện
+              $(".toggle-btn").on("click", function () {
+                const productId = $(this).data("id");
+                const currentStatus = $(this).data("status");
+                const newStatus = currentStatus === "show" ? "hide" : "show";
+                const button = $(this);
+                const row = $(`tr[data-id="${productId}"]`);
+                $.ajax({
+                  url: "api/update_status.php",
+                  type: "POST",
+                  data: { MaSP: productId, TrangThai: newStatus },
+                  success: function (response) {
+                    if (newStatus === "hide") {
+                      row.addClass("strikethrough");
+                      button
+                        .text("Hiện")
+                        .data("status", "hide")
+                        .css("background-color", "#4CAF50");
+                    } else {
+                      row.removeClass("strikethrough");
+                      button
+                        .text("Ẩn")
+                        .data("status", "show")
+                        .css("background-color", "#ff4d4d");
+                    }
+                  },
+                  error: function () {
+                    alert("Lỗi khi cập nhật trạng thái!");
+                  },
+                });
+              });
+
+              $("#addProductBtn").on("click", function () {
+                $("#addProductModal").fadeIn();
+              });
+
+              // Đóng modal khi nhấn nút "x" trong modal Thêm sản phẩm
+              $("#addProductModal .close").on("click", function () {
+                $("#addProductModal").fadeOut();
+              });
+
+              $(window).on("click", function (event) {
+                if ($(event.target).is("#addProductModal")) {
+                  $("#addProductModal").fadeOut();
+                }
+              });
+
+              $("#addProductForm").on("submit", function (event) {
+                event.preventDefault();
+                $.ajax({
+                  type: "POST",
+                  url: "api/addSP.php",
+                  data: $(this).serialize(),
+                  success: function (response) {
+                    alert(response);
+                    $("#addProductModal").fadeOut();
+                    loadPage("api/get_sanpham.php");
+                  },
+                  error: function () {
+                    alert("Lỗi khi thêm sản phẩm!");
+                  },
+                });
+              });
+
+              $(".edit-btn").on("click", function () {
+                $("#editProductModal").fadeIn();
+                const productId = $(this).data("id");
+                const product = data.find((p) => p.MaSP == productId);
+
+                $("#editProductForm input[name='MaSP']").val(product.MaSP);
+                $("#editProductForm input[name='TenSP']").val(product.TenSP);
+                $("#editProductForm input[name='LoaiSP']").val(product.LoaiSP);
+                $("#editProductForm input[name='KichCo']").val(product.KichCo);
+                $("#editProductForm input[name='MauSac']").val(product.MauSac);
+                $("#editProductForm input[name='GiaNhap']").val(product.GiaNhap);
+                $("#editProductForm input[name='GiaXuat']").val(product.GiaXuat);
+                $("#editProductForm input[name='SoLuongTon']").val(
+                  product.SoLuongTon
+                );
+                $("#editProductModal").fadeIn();
+              });
+
+              $("#editProductModal .close").on("click", function () {
+                $("#editProductModal").fadeOut();
+              });
+
+              $(window).on("click", function (event) {
+                if ($(event.target).is("#editProductModal")) {
+                  $("#editProductModal").fadeOut();
+                }
+              });
+
+              $("#editProductForm").on("submit", function (event) {
+                event.preventDefault();
+                $.ajax({
+                  type: "POST",
+                  url: "api/editSP.php",
+                  data: $(this).serialize(),
+                  success: function (response) {
+                    alert("Sản phẩm đã được cập nhật!");
+                    $("#editProductModal").fadeOut();
+                    loadPage("api/get_sanpham.php");
+                  },
+                  error: function () {
+                    alert("Lỗi khi cập nhật sản phẩm!");
+                  },
+                });
+              });
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                "<p>Lỗi khi tải dữ liệu: " + error + "</p>"
+              );
+            },
+          });
+        } else if (page === "api/get_nhap.php") {
+          $.ajax({
+            url: page,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              let contentHtml = `
+                <div class="table-container">
+                  <table class="product-table">
+                    <thead>
+                      <tr>
+                        <th>Mã Phiếu Nhập</th>
+                        <th>Mã Nhà Cung Cấp</th>
+                        <th>Ngày Nhập</th>
+                        <th>Mã Nhân Viên</th>
+                        <th>Mã Hoá Đơn</th>
+                        <th>Chi Tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+              `;
+              data.forEach((nhap) => {
+                contentHtml += `
+                  <tr>
+                    <td>${nhap.MaPN}</td>
+                    <td>${nhap.MaNCC}</td>
+                    <td>${nhap.NgayNhap}</td>
+                    <td>${nhap.MaNV}</td>
+                    <td>${nhap.MaHoaDon}</td>
+                    <td>
+                      <button class="detail-btn" data-id="${nhap.MaPN}">Chi Tiết</button>
+                    </td>
+                  </tr>
+                `;
+              });
+              contentHtml += `
+                    </tbody>
+                  </table>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+
+              $(".detail-btn").on("click", function () {
+                const requestId = $(this).data("id");
+                $.ajax({
+                  url: "api/get_chitietnhap.php",
+                  type: "GET",
+                  data: { MaPN: requestId },
+                  dataType: "json",
+                  success: function (response) {
+                    $("#detailBody").empty();
+                    if (Array.isArray(response) && response.length > 0) {
+                      response.forEach((product) => {
+                        $("#detailBody").append(`
+                          <tr>
+                            <td>${product.MaSP}</td>
+                            <td>${product.TenSP}</td>
+                            <td>${product.LoaiSP}</td>
+                            <td>${product.KichCo || "N/A"}</td>
+                            <td>${product.MauSac}</td>
+                            <td>${product.GiaNhap}</td>
+                            <td>${product.SoLuongNhap}</td>
+                            <td>${product.NgayNhap}</td>
+                          </tr>
+                        `);
+                      });
+                    } else {
+                      $("#detailBody").append(`
+                        <tr>
+                          <td colspan="8">Không có sản phẩm nào cho phiếu nhập này</td>
+                        </tr>
+                      `);
+                    }
+                    $("#detailModal").fadeIn();
+                  },
+                  error: function () {
+                    alert("Lỗi khi lấy chi tiết sản phẩm nhập kho!");
+                  },
+                });
+              });
+
+              $("#detailModal .close").on("click", function () {
+                $("#detailModal").fadeOut();
+              });
+
+              $(window).on("click", function (event) {
+                if ($(event.target).is("#detailModal")) {
+                  $("#detailModal").fadeOut();
+                }
+              });
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                "<p>Lỗi khi tải dữ liệu: " + error + "</p>"
+              );
+            },
+          });
+        } else if (page === "api/get_xuat.php") {
+          $.ajax({
+            url: page,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              let contentHtml = `
+                <div class="table-container">
+                  <table class="product-table">
+                    <thead>
+                      <tr>
+                        <th>Mã Phiếu Xuất</th>
+                        <th>Ngày Xuất</th>
+                        <th>Mã Nhân Viên</th>
+                        <th>Mã Khách Hàng</th>
+                        <th>Mã Hoá Đơn</th>
+                        <th>Chi Tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+              `;
+              data.forEach((xuat) => {
+                contentHtml += `
+                  <tr>
+                    <td>${xuat.MaPX}</td>
+                    <td>${xuat.NgayXuat}</td>
+                    <td>${xuat.MaNV}</td>
+                    <td>${xuat.MaKH}</td>
+                    <td>${xuat.MaHoaDon}</td>
+                    <td>
+                      <button class="detail-btn" data-id="${xuat.MaPX}">Chi Tiết</button>
+                    </td>
+                  </tr>
+                `;
+              });
+              contentHtml += `
+                    </tbody>
+                  </table>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                "<p>Lỗi khi tải dữ liệu: " + error + "</p>"
+              );
+            },
+          });
+        } else if (page === "api/get_hoadon.php") {
+          $.ajax({
+            url: page,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              let contentHtml = `
+                <div class="table-container">
+                  <table class="product-table">
+                    <thead>
+                      <tr>
+                        <th>Mã Hoá Đơn</th>
+                        <th>Loại Phiếu</th>
+                        <th>Ngày Thực Hiện</th>
+                        <th>Mã Nhân viên</th>
+                        <th>Chi Tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+              `;
+              data.forEach((hoadon) => {
+                contentHtml += `
+                  <tr>
+                    <td>${hoadon.MaHoaDon}</td>
+                    <td>${hoadon.LoaiPhieu}</td>
+                    <td>${hoadon.NgayThucHien}</td>
+                    <td>${hoadon.MaNV}</td>
+                    <td>
+                      <button class="detail-btn" data-id="${hoadon.MaHoaDon}">Chi Tiết</button>
+                    </td>
+                  </tr>
+                `;
+              });
+              contentHtml += `
+                    </tbody>
+                  </table>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                "<p>Lỗi khi tải dữ liệu: " + error + "</p>"
+              );
+            },
+          });
+        } else if (page === "api/dashboard.php") {
+          $.ajax({
+            url: "api/dashboard.php",
+            type: "GET",
+            dataType: "json",
+            success: function (lowStockData) {
+              let contentHtml = `
+                <div class="main-content-1">
+                  <div class="dashboard-box overview">
+                    <h3>Bảng tổng quan</h3>
+                    <p style="margin-top: 10px; font-weight: normal;">
+                      Dữ liệu tổng quan sẽ hiển thị ở đây.
+                    </p>
+                  </div>
+                  <div class="dashboard-box chart">
+                    <h3>Biểu đồ nhập xuất kho</h3>
+                    <!-- <canvas id="chartNhapXuat"></canvas> -->
+                  </div>
+                  <div class="dashboard-box low-stock">
+                    <h3>Sản phẩm gần hết hàng</h3>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Mã Sản Phẩm</th>
+                          <th>Tên Sản Phẩm</th>
+                          <th>Số Lượng Tồn</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+              `;
+              if (Array.isArray(lowStockData) && lowStockData.length > 0) {
+                lowStockData.forEach((product) => {
+                  contentHtml += `
+                    <tr>
+                      <td>${product.MaSP}</td>
+                      <td>${product.TenSP}</td>
+                      <td>${product.SoLuongTon}</td>
+                    </tr>
+                  `;
+                });
+              } else {
+                contentHtml += `
+                    <tr>
+                      <td colspan="3">Không có sản phẩm nào gần hết hàng</td>
+                    </tr>
+                `;
+              }
+              contentHtml += `
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                `<p>Lỗi khi tải dữ liệu: ${error}</p>`
+              );
+            },
+          });
+        } else if (page === "api/get_donhang.php") {
+          $.ajax({
+            url: page,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              let contentHtml = `
+                <div class="table-container">
+                  <table class="product-table">
+                    <thead>
+                      <tr>
+                        <th>Mã Đơn</th>
+                        <th>Mã Phiếu Xuất</th>
+                        <th>Mã Khách Hàng</th>
+                        <th>Ngày Đặt</th>
+                        <th>Trạng Thái</th>
+                        <th>Ghi Chú</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+              `;
+              if (Array.isArray(data) && data.length > 0) {
+                data.forEach((order) => {
+                  contentHtml += `
+                    <tr>
+                      <td>${order.MaDon}</td>
+                      <td>${order.MaPX}</td>
+                      <td>${order.MaKH}</td>
+                      <td>${order.NgayDat}</td>
+                      <td>
+                      </td>
+                      <td>${order.GhiChu || "Không có"}</td>
+                    </tr>
+                  `;
+                });
+              } else {
+                contentHtml += `
+                  <tr>
+                    <td colspan="6">Không có đơn hàng đang chờ xử lý</td>
+                  </tr>
+                `;
+              }
+              contentHtml += `
+                    </tbody>
+                  </table>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+
+              $(".approve-btn").on("click", function () {
+                const orderId = $(this).data("id");
+                $.ajax({
+                  url: "api/approve_order.php",
+                  type: "POST",
+                  data: { MaDon: orderId },
+                  success: function (response) {
+                    alert("Đơn hàng đã được duyệt!");
+                    loadPage("api/get_donhang.php");
+                  },
+                  error: function () {
+                    alert("Lỗi khi duyệt đơn hàng!");
+                  },
+                });
+              });
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                `<p>Lỗi khi tải dữ liệu đơn hàng: ${error}</p>`
+              );
+            },
+          });
+        } else if (page === "api/get_yeucau.php") {
+          $.ajax({
+            url: page,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              let contentHtml = `
+                <div class="table-container">
+                  <table class="product-table">
+                    <thead>
+                      <tr>
+                        <th>Mã Phiếu Nhập</th>
+                        <th>Nhà Cung Cấp</th>
+                        <th>Ngày Nhập</th>
+                        <th>Mã Nhân Viên</th>
+                        <th>Trạng Thái</th>
+                        <th>Mã Hoá Đơn</th>
+                        <th>Chi Tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+              `;
+              if (Array.isArray(data) && data.length > 0) {
+                data.forEach((request) => {
+                  contentHtml += `
+                    <tr>
+                      <td>${request.MaPN}</td>
+                      <td>${request.MaNCC}</td>
+                      <td>${request.NgayNhap}</td>
+                      <td>${request.MaNV}</td>
+                      <td>
+                      </td>
+                      <td>${request.MaHoaDon}</td>
+                      <td>
+                        <button class="detail-btn" data-id="${request.MaPN}">Chi Tiết</button>
+                      </td>
+                    </tr>
+                  `;
+                });
+              } else {
+                contentHtml += `
+                  <tr>
+                    <td colspan="6">Không có yêu cầu nhập kho đang chờ xử lý</td>
+                  </tr>
+                `;
+              }
+              contentHtml += `
+                    </tbody>
+                  </table>
+                </div>
+              `;
+              $("#content .main-contents").html(contentHtml);
+
+              // Xử lý sự kiện nút Duyệt
+              $(".approve-btn").on("click", function () {
+                const requestId = $(this).data("id");
+                $.ajax({
+                  url: "api/approve_request.php",
+                  type: "POST",
+                  data: { MaPN: requestId },
+                  success: function (response) {
+                    alert("Yêu cầu đã được duyệt!");
+                    loadPage("api/get_yeucau.php");
+                  },
+                  error: function () {
+                    alert("Lỗi khi duyệt yêu cầu!");
+                  },
+                });
+              });
+
+              // Xử lý sự kiện nút Từ chối
+              $(".deny-btn").on("click", function () {
+                const requestId = $(this).data("id");
+                $.ajax({
+                  url: "api/deny_request.php",
+                  type: "POST",
+                  data: { MaPN: requestId },
+                  success: function (response) {
+                    alert("Yêu cầu đã bị từ chối!");
+                    loadPage("api/get_yeucau.php");
+                  },
+                  error: function () {
+                    alert("Lỗi khi từ chối yêu cầu!");
+                  },
+                });
+              });
+
+              // Hiển thị chi tiết phiếu nhập
+              $(".detail-btn").on("click", function () {
+                const requestId = $(this).data("id");
+                $.ajax({
+                  url: "api/get_chitietnhap.php",
+                  type: "GET",
+                  data: { MaPN: requestId },
+                  dataType: "json",
+                  success: function (response) {
+                    $("#detailBody").empty();
+                    if (Array.isArray(response) && response.length > 0) {
+                      response.forEach((product) => {
+                        $("#detailBody").append(`
+                          <tr>
+                            <td>${product.MaSP}</td>
+                            <td>${product.TenSP}</td>
+                            <td>${product.LoaiSP}</td>
+                            <td>${product.KichCo || "N/A"}</td>
+                            <td>${product.MauSac}</td>
+                            <td>${product.GiaNhap}</td>
+                            <td>${product.SoLuongNhap}</td>
+                          </tr>
+                        `);
+                      });
+                    } else {
+                      $("#detailBody").append(`
+                        <tr>
+                          <td colspan="8">Không có sản phẩm nào cho phiếu nhập này</td>
+                        </tr>
+                      `);
+                    }
+                    $("#detailModal").fadeIn();
+                  },
+                  error: function () {
+                    alert("Lỗi khi lấy chi tiết sản phẩm nhập kho!");
+                  },
+                });
+              });
+
+              // Đóng modal chi tiết khi nhấn "x"
+              $("#detailModal .close").on("click", function () {
+                $("#detailModal").fadeOut();
+              });
+
+              // Đóng modal khi nhấn ra ngoài
+              $(window).on("click", function (event) {
+                if ($(event.target).is("#detailModal")) {
+                  $("#detailModal").fadeOut();
+                }
+              });
+            },
+            error: function (xhr, status, error) {
+              $("#content .main-contents").html(
+                `<p>Lỗi khi tải dữ liệu yêu cầu: ${error}</p>`
+              );
+            },
+          });
+        } else {
+          // Load trang tĩnh khác (nếu có)
+          $("#content .main-contents").load(page);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
