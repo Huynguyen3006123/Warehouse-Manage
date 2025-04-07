@@ -1,0 +1,122 @@
+/* nhap.css - Đồng bộ giao diện của nhap.php với sanpham.php */
+
+/* Thiết lập font và màu sắc tổng thể */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #e6f7ff, #b3e0ff);
+    margin: 0;
+    padding: 0;
+    display: flex; /* Sidebar cố định bên trái, nội dung bên phải */
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px; /* Giống dashboard.css */
+    background: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Menu */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+}
+
+.sidebar ul li:hover a {
+    background: #007bff;
+    color: white;
+    transform: translateX(5px);
+}
+
+/* Nút Đăng xuất */
+.logout-btn {
+    margin-top: auto;
+    background: red;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background: darkred;
+}
+
+/* Vùng chứa bảng nhập */
+.table-container {
+    margin-left: 240px; /* Đẩy nội dung sang phải để không bị sidebar che */
+    width: calc(100% - 240px);
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    flex: 1;
+}
+
+/* Bảng nhập */
+.nhap-table {
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nhap-table th,
+.nhap-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.nhap-table th {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.nhap-table tbody tr:hover {
+    background: #f1f1f1;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .table-container {
+        margin-left: 0;
+        width: 100%;
+    }
+    .nhap-table {
+        min-width: 600px;
+    }
+}
+

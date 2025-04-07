@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Quản lý kho</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="backBtnContainer" style="display: none;">
+        <button class="back-btn" onclick="loadLoginForm()">← Quay lại</button>
+    </div>
+
+    <div class="container">
+        <h1>Web Quản Lý Kho</h1>
+        <p>Nguyễn Tấn Phát / Hoàng Cát Tường</p>
+        <p>Vũ Trọng Quý / Nguyễn Đức Huy</p>
+        
+        <div class="form-container">
+            <div id="formContent">
+                <!-- Form đăng nhập mặc định -->
+                <div class="login-box">
+                    <h2>Đăng nhập</h2>
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <label for="username">Tên đăng nhập</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div id="loginError" class="error-message" style="display: none;"></div>
+                        <button type="submit">Đăng nhập</button>
+                    </form>
+                    <p class="register-link">
+                        Chưa có tài khoản? 
+                        <a href="#" onclick="loadRegisterForm()">Tạo tài khoản</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kiểm tra session khi trang được tải
+        fetch('api/check_session.php', {
+            method: 'GET',
+            cache: 'no-cache'
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Phản hồi từ check_session.php:", data);
+            if (data.success) {
+                console.log("Session hợp lệ, chuyển hướng...");
+                if (data.role === 'Quản lý') {
+                    window.location.href = 'dashboard.html';
+                } else if (data.role === 'Nhân viên') {
+                    window.location.href = 'dashboardNV.html';
+                } else if (data.role === 'Cửa Hàng') {
+                    window.location.href = 'dashboardCH.html';
+                }
+            } else {
+                console.log("Session không hợp lệ, hiển thị trang đăng nhập...");
+            }
+        })
+        .catch(error => {
+            console.log("Lỗi khi gọi API:", error);
+            // Tiếp tục hiển thị trang đăng nhập nếu có lỗi
+        });
+
+        // Xử lý form đăng nhập
+        document.getElementById('loginForm').onsubmit = function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('api/login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.role === 'Quản lý') {
+                        window.location.href = 'dashboard.html';
+                    } else if (data.role === 'Nhân viên') {
+                        window.location.href = 'dashboardNV.html';
+                    } else if (data.role === 'Cửa Hàng') {
+                        window.location.href = 'dashboardCH.html';
+                    }
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                    document.getElementById('loginError').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                alert('Lỗi kết nối: ' + error);
+            });
+        };
+
+        // Tải form đăng ký
+        function loadRegisterForm() {
+            // Hiển thị nút Quay lại
+            document.getElementById('backBtnContainer').style.display = 'block';
+
+            document.getElementById('formContent').innerHTML = `
+                <div class="login-box">
+                    <h2>Tạo tài khoản cửa hàng</h2>
+                    <form id="registerForm">
+                        <div class="input-group">
+                            <label for="reg-username">Tên đăng nhập</label>
+                            <input type="text" id="reg-username" name="username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-password">Mật khẩu</label>
+                            <input type="password" id="reg-password" name="password" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-confirm-password">Xác nhận mật khẩu</label>
+                            <input type="password" id="reg-confirm-password" name="confirm_password" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-shop-name">Tên cửa hàng</label>
+                            <input type="text" id="reg-shop-name" name="shop_name" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-address">Địa chỉ</label>
+                            <input type="text" id="reg-address" name="address" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-phone">Số điện thoại</label>
+                            <input type="text" id="reg-phone" name="phone" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="reg-email">Email</label>
+                            <input type="email" id="reg-email" name="email" required>
+                        </div>
+                        <button type="submit">Đăng ký</button>
+                    </form>
+                </div>
+            `;
+
+            // Xử lý form đăng ký
+            document.getElementById('registerForm').onsubmit = function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch('api/register.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        loadLoginForm(); // Quay lại form đăng nhập
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Lỗi kết nối: ' + error);
+                });
+            };
+        }
+
+        // Tải lại form đăng nhập
+        function loadLoginForm() {
+            // Ẩn nút Quay lại
+            document.getElementById('backBtnContainer').style.display = 'none';
+
+            document.getElementById('formContent').innerHTML = `
+                <div class="login-box">
+                    <h2>Đăng nhập</h2>
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <label for="username">Tên đăng nhập</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div id="loginError" class="error-message" style="display: none;"></div>
+                        <button type="submit">Đăng nhập</button>
+                    </form>
+                    <p class="register-link">
+                        Chưa có tài khoản? 
+                        <a href="#" onclick="loadRegisterForm()">Tạo tài khoản</a>
+                    </p>
+                </div>
+            `;
+
+            // Gắn lại sự kiện cho form đăng nhập
+            document.getElementById('loginForm').onsubmit = function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch('api/login.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.role === 'Quản lý') {
+                            window.location.href = 'dashboard.html';
+                        } else if (data.role === 'Nhân viên') {
+                            window.location.href = 'dashboardNV.html';
+                        } else if (data.role === 'Cửa hàng') {
+                            window.location.href = 'dashboardShop.html';
+                        }
+                    } else {
+                        document.getElementById('loginError').style.display = 'block';
+                        document.getElementById('loginError').textContent = data.message;
+                    }
+                })
+                .catch(error => {
+                    alert('Lỗi kết nối: ' + error);
+                });
+            };
+        }
+    </script>
+</body>
+</html>
